@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="Project.xml" />
     <movie fps="60" />
-    <movie width="640" />
-    <movie height="480" />
+    <movie width="800" />
+    <movie height="600" />
     <movie version="3" />
     <movie minorVersion="0" />
     <movie platform="NME" />
@@ -15,15 +15,17 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\flixel\3,3,6" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\1,1,0" />
     <class path="C:\HaxeToolkit\haxe\lib\openfl\2,2,4" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel\3,3,6" />
     <class path="C:\HaxeToolkit\haxe\lib\lime\2,0,6" />
+    <class path="C:\HaxeToolkit\haxe\lib\nape\2,0,16" />
     <class path="source" />
     <class path="export\flash\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=3.3.6&#xA;openfl=2.2.4&#xA;lime=2.0.6&#xA;tools=2.0.6&#xA;FLX_NO_DEBUG&#xA;no-compilation&#xA;NAPE_RELEASE_BUILD&#xA;openfl-flash&#xA;FLX_RENDER_BLIT&#xA;web" />
+    <option directives="flixel-addons=1.1.0&#xA;openfl=2.2.4&#xA;flixel=3.3.6&#xA;lime=2.0.6&#xA;nape=2.0.16&#xA;tools=2.0.6&#xA;FLX_NO_DEBUG&#xA;no-compilation&#xA;NAPE_RELEASE_BUILD&#xA;openfl-flash&#xA;FLX_RENDER_BLIT&#xA;web" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
@@ -32,10 +34,7 @@
   </build>
   <!-- haxelib libraries -->
   <haxelib>
-    <library name="flixel" />
-    <library name="openfl" />
-    <library name="flixel-addons" />
-    <library name="nape" />
+    <!-- example: <library name="..." /> -->
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>

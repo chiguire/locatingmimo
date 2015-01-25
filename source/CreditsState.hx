@@ -1,4 +1,4 @@
-package;
+package ;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -8,10 +8,12 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 
 /**
- * A FlxState which can be used for the game's menu.
+ * ...
+ * @author Ciro Duran
  */
-class MenuState extends FlxState
+class CreditsState extends FlxState
 {
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -19,7 +21,7 @@ class MenuState extends FlxState
 	{
 		super.create();
 		
-		var bg = new FlxSprite(0, 0, AssetPaths.Intro2__png);
+		var bg = new FlxSprite(0, 0, AssetPaths.Credits__png);
 		add(bg);
 	}
 	
@@ -39,13 +41,9 @@ class MenuState extends FlxState
 	{
 		super.update();
 		
-		if (FlxG.keys.justPressed.SPACE)
+		if (FlxG.keys.justPressed.ANY)
 		{
-			FlxG.switchState(new PlayState());
+			FlxG.switchState(new MenuState());
 		}
-		if (FlxG.keys.justPressed.C)
-		{
-			FlxG.switchState(new CreditsState());
-		}
-	}	
+	}
 }
