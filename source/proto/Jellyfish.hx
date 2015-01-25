@@ -6,6 +6,7 @@ import nape.phys.BodyType;
 import nape.geom.Vec2;
 import nape.dynamics.InteractionFilter;
 import nape.phys.FluidProperties;
+import nape.phys.Material;
 
 /**
  * ...
@@ -13,7 +14,7 @@ import nape.phys.FluidProperties;
  */
 class Jellyfish extends FlxNapeSprite
 {
-	public var max_speed : Vec2 = new Vec2(250, 250);
+	public var max_speed : Vec2 = new Vec2(2000, 2000);
 
 	public var is_in_water : Bool = false;
 	
@@ -35,8 +36,8 @@ class Jellyfish extends FlxNapeSprite
 		interactionFilter.collisionMask = -1;
 		body.setShapeFilters(interactionFilter);
 		
-		var fluidProperties : FluidProperties = new FluidProperties(3, 1);
-		body.setShapeFluidProperties(fluidProperties);
+		var material : Material = new Material(0.5, 1.0, 2.0, 2, 0.001);
+		body.setShapeMaterials(material);
 		body.shapes.at(0).cbTypes.add(collision_type);
 		//body.shapes.at(0).sensorEnabled = true;
 		

@@ -420,7 +420,7 @@ class PlayState extends FlxNapeState
 		for (i in 0...1)
 		{
 			var p : Int = FlxRandom.getObject(positions);
-			var tiburon = new Tiburon(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line+120, 320), tiburon_collision_type);
+			var tiburon = new Tiburon(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line+120, sea_line+320), tiburon_collision_type);
 			
 			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
 			
@@ -433,7 +433,7 @@ class PlayState extends FlxNapeState
 		for (i in 0...4)
 		{
 			var p : Int = FlxRandom.getObject(positions);
-			var jellyfish = new Jellyfish(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line+110, 310), jellyfish_collision_type);
+			var jellyfish = new Jellyfish(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line+110, sea_line+310), jellyfish_collision_type);
 			
 			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
 			
@@ -513,7 +513,7 @@ class PlayState extends FlxNapeState
 		}
 		if (collision.int1.cbTypes.has(fish_collision_type) && collision.int2.cbTypes.has(seagull_collision_type))
 		{
-			free_fish(true);
+			free_fish(false);
 		}
 	}
 	

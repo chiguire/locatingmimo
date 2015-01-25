@@ -46,7 +46,7 @@ class Tiburon extends FlxNapeSprite
 		
 		is_in_water = body.position.y >= 600;
 		
-		flipX = (body.velocity.x > 0);
+		flipX = (body.velocity.x >= 0);
 	}
 	
 	public function seek(target:FlxNapeSprite) : Void
@@ -62,6 +62,10 @@ class Tiburon extends FlxNapeSprite
 			temp_force = temp_force.normalise();
 			
 			temp_force2.setxy(temp_force.x * max_speed.x, temp_force.y * max_speed.y).subeq(body.velocity);
+			if (temp_force2.x < 3)
+			{
+				temp_force.x = 0;
+			}
 		}
 		else
 		{
