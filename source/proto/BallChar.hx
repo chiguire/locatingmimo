@@ -51,6 +51,7 @@ class BallChar extends FlxNapeSprite
 		body.setShapeFilters(interactionFilter);
 		body.position.y = Y;
 		body.position.x = X;
+		body.inertia = 5000;
 		body.userData.flxSprite = this;
 		body.cbTypes.add(collision_type);
 		

@@ -19,6 +19,8 @@ class SplashSoft extends FlxSprite
 		animation.add("normal", [1, 2, 3, 4, 4], 10, false);
 		animation.play("normal");
 		animation.callback = check_finished;
+		
+		FlxG.sound.play(AssetPaths.splash__mp3, 0.2, false, true);
 	}
 	
 	private function check_finished(frame_name:String, frame_number:Int, frame_index:Int) : Void

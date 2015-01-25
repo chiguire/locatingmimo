@@ -21,6 +21,10 @@ class MenuState extends FlxState
 		
 		var bg = new FlxSprite(0, 0, AssetPaths.Intro2__png);
 		add(bg);
+		
+		FlxG.sound.playMusic(AssetPaths.bensound_jazzyfrenchy__mp3, 0.5, true);
+		
+		FlxG.sound.muteKeys = ["M"];
 	}
 	
 	/**
