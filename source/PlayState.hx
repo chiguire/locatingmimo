@@ -56,12 +56,14 @@ import proto.Tiburon;
  */
 class PlayState extends FlxNapeState
 {
+	#if (web || desktop)
 	public static var player1_key_mapping : Map<Array<String>, Int> = [
 		["W", "UP"] => FlxObject.UP,
 		["S", "DOWN"] => FlxObject.DOWN,
 		["A", "LEFT"] => FlxObject.LEFT,
 		["D", "RIGHT"] => FlxObject.RIGHT
 	];
+	#end
 	
 	var balls : Array<BallChar>;
 	var algas : Array<FlxNapeSprite>;
@@ -243,6 +245,7 @@ class PlayState extends FlxNapeState
 		*/
 		var movement : Int = 0;
 		
+		#if (web || desktop)
 		for (k in player1_key_mapping.keys())
 		{
 			if (FlxG.keys.anyPressed(k))
@@ -250,6 +253,40 @@ class PlayState extends FlxNapeState
 				movement |= player1_key_mapping.get(k);
 			}
 		}
+		#end
+		
+		#if mobile
+		if (current_fish >= 0)
+		{
+			var cf = balls[current_fish];
+			
+			for (touch in FlxG.touches.list)
+			{
+				if (touch.pressed)
+				{
+					if (touch.x > cf.x + cf.width*2)
+					{
+						movement |= FlxObject.RIGHT;
+					}
+					else if (touch.x < cf.x - cf.width)
+					{
+						movement |= FlxObject.LEFT;
+					}
+					
+					if (touch.y > cf.y + cf.height*2)
+					{
+						movement |= FlxObject.DOWN;
+					}
+					else if (touch.y < cf.y - cf.height)
+					{
+						movement |= FlxObject.UP;
+					}
+				}
+				break;
+			}
+		}
+		
+		#end
 		
 		if (current_fish >= 0)
 		{

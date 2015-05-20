@@ -43,6 +43,7 @@ class MenuState extends FlxState
 	{
 		super.update();
 		
+		#if (web || desktop)
 		if (FlxG.keys.justPressed.SPACE)
 		{
 			FlxG.switchState(new PlayState());
@@ -51,5 +52,13 @@ class MenuState extends FlxState
 		{
 			FlxG.switchState(new CreditsState());
 		}
+		#end
+		
+		#if mobile
+		if (FlxG.touches.justReleased().length > 0)
+		{
+			FlxG.switchState(new PlayState());
+		}
+		#end
 	}	
 }
