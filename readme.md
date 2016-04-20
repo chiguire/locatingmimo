@@ -8,4 +8,4 @@ Made with HaxeFlixel (http://www.haxeflixel.com), and Nape.
 
 See a gameplay video at https://www.youtube.com/watch?v=cJ0EnoVRPVI
 
-Play it online at http://chiguire.itch.io/locating-mimo
+Play it online at http://chiguire.itch.io/locating-mimo (Requires Adobe Flash Player)
