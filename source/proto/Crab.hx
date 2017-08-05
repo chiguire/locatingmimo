@@ -1,8 +1,9 @@
 package proto;
 
 import flixel.addons.nape.FlxNapeSprite;
-import flixel.util.FlxMath;
-import flixel.util.FlxRandom;
+import flixel.math.FlxMath;
+import flixel.FlxG;
+import flixel.math.FlxRandom;
 import nape.callbacks.CbType;
 import nape.phys.BodyType;
 import nape.geom.Vec2;
@@ -40,14 +41,14 @@ class Crab extends FlxNapeSprite
 		animation.add("normal", [1, 2, 3], 10, true);
 		animation.play("normal");
 		
-		phase = FlxRandom.intRanged(0, 360);
+		phase = FlxG.random.int(0, 360);
 		
 		physicsEnabled = true;
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
-		super.update();
+		super.update(elapsed);
 		
 		is_in_water = body.position.y >= 505;
 		phase = (phase + 10) % 360;

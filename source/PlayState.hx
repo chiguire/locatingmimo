@@ -1,15 +1,15 @@
 package;
 
 import flixel.addons.display.FlxBackdrop;
-import flixel.addons.effects.FlxWaveSprite;
-import flixel.addons.nape.FlxNapeState;
+import flixel.addons.effects.chainable.FlxEffectSprite;
+import flixel.addons.effects.chainable.FlxWaveEffect;
+import flixel.addons.nape.FlxNapeSpace;
 import flixel.addons.nape.FlxNapeSprite;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
-import flixel.group.FlxTypedGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 import flixel.FlxCamera;
 import flixel.util.FlxTimer;
 import haxe.macro.ExprTools.ExprArrayTools;
@@ -34,7 +34,7 @@ import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
-import flixel.util.FlxMath;
+import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import nape.phys.FluidProperties;
 import nape.shape.Polygon;
@@ -54,7 +54,7 @@ import proto.Tiburon;
 /**
  * A FlxState which can be used for the actual gameplay.
  */
-class PlayState extends FlxNapeState
+class PlayState extends FlxState
 {
 	#if (web || desktop)
 	public static var player1_key_mapping : Map<Array<String>, Int> = [
@@ -107,10 +107,10 @@ class PlayState extends FlxNapeState
 	override public function create():Void
 	{
 		super.create();
+		FlxNapeSpace.init();
+		FlxNapeSpace.drawDebug = true;
 		
-		napeDebugEnabled = true;
-		
-		createWalls(0, -1000, 6000, 800);
+		FlxNapeSpace.createWalls(0, -1000, 6000, 800);
 		
 		background = new FlxBackdrop(AssetPaths.background_1__png, 1, 1, true, false);
 		add(background);
@@ -129,12 +129,12 @@ class PlayState extends FlxNapeState
 		
 		sea_body = new Body(BodyType.STATIC, Vec2.weak(3000, sea_line+328/2.0));
 		sea_shape.body = sea_body;
-		sea_body.space = FlxNapeState.space;
+		sea_body.space = FlxNapeSpace.space;
 		
 		var wharf_shape : Polygon = new Polygon(Polygon.rect( -320 / 2.0, -24 / 2.0, 320, 24));
 		var wharf_body = new Body(BodyType.STATIC, Vec2.weak(320 / 2.0, 388 + 12));
 		wharf_shape.body = wharf_body;
-		wharf_body.space = FlxNapeState.space;
+		wharf_body.space = FlxNapeSpace.space;
 		
 		wharf = new FlxSprite(0, 388, AssetPaths.wharf__png);
 		add(wharf);
@@ -181,19 +181,19 @@ class PlayState extends FlxNapeState
 		overlayCamera.follow(balls[current_fish], FlxCamera.STYLE_PLATFORMER, 1);
 		FlxG.cameras.reset(overlayCamera);
 		
-		FlxNapeState.space.gravity.setxy(0, 600);
+		FlxNapeSpace.space.gravity.setxy(0, 600);
 		
 		algae_listener_begin = new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, algae_collision_type, fish_to_algae, 0);
 		algae_listener_end = new InteractionListener(CbEvent.END, InteractionType.ANY, fish_collision_type, algae_collision_type, fish_to_algae, 0);
-		FlxNapeState.space.listeners.add(algae_listener_begin);
-		FlxNapeState.space.listeners.add(algae_listener_end);
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, water_collision_type, fish_to_water, 0));
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.END, InteractionType.ANY, fish_collision_type, water_collision_type, fish_to_water, 0));
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, crab_collision_type, fish_to_creature, 0));
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, pelican_collision_type, fish_to_creature, 0));
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, jellyfish_collision_type, fish_to_creature, 0));
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, tiburon_collision_type, fish_to_creature, 0));
-		FlxNapeState.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, seagull_collision_type, fish_to_creature, 0));
+		FlxNapeSpace.space.listeners.add(algae_listener_begin);
+		FlxNapeSpace.space.listeners.add(algae_listener_end);
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, water_collision_type, fish_to_water, 0));
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.END, InteractionType.ANY, fish_collision_type, water_collision_type, fish_to_water, 0));
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, crab_collision_type, fish_to_creature, 0));
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, pelican_collision_type, fish_to_creature, 0));
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, jellyfish_collision_type, fish_to_creature, 0));
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, tiburon_collision_type, fish_to_creature, 0));
+		FlxNapeSpace.space.listeners.add(new InteractionListener(CbEvent.BEGIN, InteractionType.ANY, fish_collision_type, seagull_collision_type, fish_to_creature, 0));
 		
 		//FlxG.watch.add(balls[6].body.velocity, "y");
 		//FlxG.watch.add(crabs[0].body, "position");
@@ -374,7 +374,7 @@ class PlayState extends FlxNapeState
 		
 		for (i in 0...positions.length)
 		{
-			add_algae(positions[i] + FlxRandom.intRanged( -200, 200), FlxRandom.getObject(names));
+			add_algae(positions[i] + FlxG.random.int( -200, 200), FlxG.random.getObject(names));
 		}
 	}
 	
@@ -394,9 +394,9 @@ class PlayState extends FlxNapeState
 		
 		for (i in 0...positions.length)
 		{
-			var cloud = new FlxSprite(positions[i] + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(100, 300), AssetPaths.cloud__png);
+			var cloud = new FlxSprite(positions[i] + FlxG.random.int( -200, 200), FlxG.random.int(100, 300), AssetPaths.cloud__png);
 			
-			var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
+			var tween_options : TweenOptions = { startDelay: FlxG.random.float(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxG.random.float(0, 3) };
 			
 			FlxTween.cubicMotion(cloud, cloud.x, cloud.y, cloud.x + 200, cloud.y, cloud.x + 400, cloud.y, cloud.x + 600, cloud.y, 60, tween_options);
 			add(cloud);
@@ -416,10 +416,10 @@ class PlayState extends FlxNapeState
 		//Crabs
 		for (i in 0...2)
 		{
-			var p : Int = FlxRandom.getObject(positions);
-			var crab = new Crab(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line + 100, sea_line+300), crab_collision_type);
+			var p : Int = FlxG.random.getObject(positions);
+			var crab = new Crab(p + FlxG.random.int( -200, 200), FlxG.random.int(sea_line + 100, sea_line+300), crab_collision_type);
 			
-			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
+			//var tween_options : TweenOptions = { startDelay: FlxG.random.float(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxG.random.float(0, 3) };
 			
 			//FlxTween.cubicMotion(crab, crab.x, crab.y, crab.x + 200, crab.y, crab.x + 400, crab.y, crab.x + 600, crab.y, 10, tween_options);
 			add(crab);
@@ -429,10 +429,10 @@ class PlayState extends FlxNapeState
 		//Pelicans
 		for (i in 0...3)
 		{
-			var p : Int = FlxRandom.getObject(positions);
-			var pelican = new Pelican(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(20, 30), pelican_collision_type);
+			var p : Int = FlxG.random.getObject(positions);
+			var pelican = new Pelican(p + FlxG.random.int( -200, 200), FlxG.random.int(20, 30), pelican_collision_type);
 			
-			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
+			//var tween_options : TweenOptions = { startDelay: FlxG.random.float(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxG.random.float(0, 3) };
 			
 			//FlxTween.cubicMotion(pelican, pelican.x, pelican.y, pelican.x + 200, pelican.y, pelican.x + 400, pelican.y, pelican.x + 600, pelican.y, 10, tween_options);
 			add(pelican);
@@ -443,10 +443,10 @@ class PlayState extends FlxNapeState
 		//Seagulls
 		for (i in 0...4)
 		{
-			var p : Int = FlxRandom.getObject(positions);
-			var seagull = new Seagull(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(120, 380), seagull_collision_type);
+			var p : Int = FlxG.random.getObject(positions);
+			var seagull = new Seagull(p + FlxG.random.int( -200, 200), FlxG.random.int(120, 380), seagull_collision_type);
 			
-			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
+			//var tween_options : TweenOptions = { startDelay: FlxG.random.float(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxG.random.float(0, 3) };
 			
 			//FlxTween.cubicMotion(seagull, seagull.x, seagull.y, seagull.x + 200, seagull.y, seagull.x + 400, seagull.y, seagull.x + 600, seagull.y, 10, tween_options);
 			add(seagull);
@@ -456,10 +456,10 @@ class PlayState extends FlxNapeState
 		//Tiburons
 		for (i in 0...1)
 		{
-			var p : Int = FlxRandom.getObject(positions);
-			var tiburon = new Tiburon(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line+120, sea_line+320), tiburon_collision_type);
+			var p : Int = FlxG.random.getObject(positions);
+			var tiburon = new Tiburon(p + FlxG.random.int( -200, 200), FlxG.random.int(sea_line+120, sea_line+320), tiburon_collision_type);
 			
-			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
+			//var tween_options : TweenOptions = { startDelay: FlxG.random.float(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxG.random.float(0, 3) };
 			
 			//FlxTween.cubicMotion(tiburon, tiburon.x, tiburon.y, tiburon.x + 200, tiburon.y, tiburon.x + 400, tiburon.y, tiburon.x + 600, tiburon.y, 10, tween_options);
 			add(tiburon);
@@ -469,10 +469,10 @@ class PlayState extends FlxNapeState
 		//Jellyfish
 		for (i in 0...4)
 		{
-			var p : Int = FlxRandom.getObject(positions);
-			var jellyfish = new Jellyfish(p + FlxRandom.intRanged( -200, 200), FlxRandom.intRanged(sea_line+110, sea_line+310), jellyfish_collision_type);
+			var p : Int = FlxG.random.getObject(positions);
+			var jellyfish = new Jellyfish(p + FlxG.random.int( -200, 200), FlxG.random.int(sea_line+110, sea_line+310), jellyfish_collision_type);
 			
-			//var tween_options : TweenOptions = { startDelay: FlxRandom.floatRanged(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxRandom.floatRanged(0, 3) };
+			//var tween_options : TweenOptions = { startDelay: FlxG.random.float(0, 3), ease: FlxEase.quadInOut, type: FlxTween.PINGPONG, loopDelay: FlxG.random.float(0, 3) };
 			
 			//FlxTween.cubicMotion(jellyfish, jellyfish.x, jellyfish.y, jellyfish.x + 200, jellyfish.y, jellyfish.x + 400, jellyfish.y, jellyfish.x + 600, jellyfish.y, 10, tween_options);
 			add(jellyfish);

@@ -1,7 +1,7 @@
 package proto;
 
 import flixel.addons.nape.FlxNapeSprite;
-import flixel.addons.nape.FlxNapeState;
+import flixel.addons.nape.FlxNapeSpace;
 import nape.callbacks.CbType;
 import nape.dynamics.InteractionFilter;
 import nape.phys.BodyType;
@@ -66,9 +66,9 @@ class BallChar extends FlxNapeSprite
 		//FlxG.watch.add(this, "distance_", name + " dist");
 	}
 	
-	public override function update()
+	public override function update(elapsed:Float)
 	{
-		super.update();
+		super.update(elapsed);
 		
 		if (Math.abs(body.angularVel) < 3)
 		{

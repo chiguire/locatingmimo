@@ -1,8 +1,9 @@
 package proto;
 
-import flixel.addons.effects.FlxWaveSprite;
+import flixel.addons.effects.chainable.FlxEffectSprite;
+import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.nape.FlxNapeSprite;
-import flixel.addons.nape.FlxNapeState;
+import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxSprite;
 import nape.callbacks.CbType;
 import nape.phys.Body;
@@ -39,9 +40,9 @@ class Algae extends FlxNapeSprite
 		algae_sprite0.destroy();
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
-		super.update();
+		super.update(elapsed);
 		
 		if (shake)
 		{

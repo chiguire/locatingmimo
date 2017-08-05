@@ -1,11 +1,12 @@
 package proto;
 
+import flixel.FlxG;
 import flixel.addons.nape.FlxNapeSprite;
 import nape.callbacks.CbType;
 import nape.phys.BodyType;
 import nape.geom.Vec2;
 import nape.dynamics.InteractionFilter;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 
 /**
  * ...
@@ -35,8 +36,8 @@ class Pelican extends FlxNapeSprite
 		animation.add("normal", [1, 2, 3], 10, true);
 		animation.play("normal");
 		
-		phase.x = FlxRandom.intRanged(0, 360);
-		phase.y = FlxRandom.intRanged(0, 360);
+		phase.x = FlxG.random.int(0, 360);
+		phase.y = FlxG.random.int(0, 360);
 		
 		physicsEnabled = true;
 	}
